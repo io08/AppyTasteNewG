@@ -12,7 +12,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>54441c8e-debd-4cd1-9f6a-9a0f34673f2d</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>server.js</StartupFile>
+    <StartupFile>app.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,7 @@
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
     <ProjectView>ShowAllFiles</ProjectView>
     <NodejsPort>1337</NodejsPort>
-    <StartWebBrowser>true</StartWebBrowser>
+    <StartWebBrowser>True</StartWebBrowser>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,9 +30,89 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="app.js" />
+    <Compile Include="bus\facebookOperations.js" />
+    <Compile Include="bus\registration.js" />
+    <Compile Include="config.js" />
+    <Compile Include="dal\appConfig\dalAppConfig.js" />
+    <Compile Include="dal\db\dalConnection.js" />
+    <Compile Include="dal\user\dalUser.js" />
+    <Compile Include="entity\enum\appConfigKeys.js" />
+    <Compile Include="entity\general\response.js" />
+    <Compile Include="public\js\120_jquery-2.2.0.min.js" />
+    <Compile Include="public\js\hbsFunctions.js" />
+    <Compile Include="routes\admin.js" />
+    <Compile Include="routes\allRoutes.js" />
+    <Compile Include="routes\auth\authIndex.js" />
+    <Compile Include="routes\login.js" />
+    <Compile Include="routes\register.js" />
     <Compile Include="server.js" />
+    <Compile Include="util\handlebarsEngine.js" />
+    <Compile Include="util\jwt.js" />
+    <Compile Include="util\logger.js" />
+    <Compile Include="util\smssender.js" />
+    <Compile Include="util\stringHelper.js" />
+    <Compile Include="util\util.js" />
+    <Content Include="appy\.gitignore" />
+    <Content Include="appy\.git\config" />
+    <Content Include="appy\.git\description" />
+    <Content Include="appy\.git\HEAD" />
+    <Content Include="appy\.git\hooks\README.sample" />
+    <Content Include="appy\.git\index" />
+    <Content Include="appy\.git\info\exclude" />
+    <Content Include="appy\.git\logs\HEAD" />
+    <Content Include="appy\.git\logs\refs\heads\master" />
+    <Content Include="appy\.git\logs\refs\remotes\origin\master" />
+    <Content Include="appy\.git\objects\pack\pack-d3a6be068795b0bec8c2b4526a400042488f3ac6.idx" />
+    <Content Include="appy\.git\objects\pack\pack-d3a6be068795b0bec8c2b4526a400042488f3ac6.pack" />
+    <Content Include="appy\.git\refs\heads\master" />
+    <Content Include="appy\.git\refs\remotes\origin\master" />
+    <Content Include="appy\README.md" />
+    <Content Include="logs\all-logs.log" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="views\error.hbs" />
+    <Content Include="views\index.hbs" />
+    <Content Include="views\layouts\index.hbs" />
+    <Content Include="views\partials\header.hbs" />
+    <Content Include="views\users.hbs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="appy\" />
+    <Folder Include="appy\.git\" />
+    <Folder Include="appy\.git\hooks\" />
+    <Folder Include="appy\.git\info\" />
+    <Folder Include="appy\.git\logs\" />
+    <Folder Include="appy\.git\logs\refs\" />
+    <Folder Include="appy\.git\logs\refs\heads\" />
+    <Folder Include="appy\.git\logs\refs\remotes\" />
+    <Folder Include="appy\.git\logs\refs\remotes\origin\" />
+    <Folder Include="appy\.git\objects\" />
+    <Folder Include="appy\.git\objects\info\" />
+    <Folder Include="appy\.git\objects\pack\" />
+    <Folder Include="appy\.git\refs\" />
+    <Folder Include="appy\.git\refs\heads\" />
+    <Folder Include="appy\.git\refs\remotes\" />
+    <Folder Include="appy\.git\refs\remotes\origin\" />
+    <Folder Include="appy\.git\refs\tags\" />
+    <Folder Include="bus\" />
+    <Folder Include="dal\" />
+    <Folder Include="dal\appConfig\" />
+    <Folder Include="dal\db\" />
+    <Folder Include="dal\user\" />
+    <Folder Include="entity\" />
+    <Folder Include="entity\enum\" />
+    <Folder Include="entity\general\" />
+    <Folder Include="logs\" />
+    <Folder Include="public\" />
+    <Folder Include="public\js\" />
+    <Folder Include="routes\" />
+    <Folder Include="routes\auth\" />
+    <Folder Include="util\" />
+    <Folder Include="views\" />
+    <Folder Include="views\layouts\" />
+    <Folder Include="views\partials\" />
+    <Folder Include="views\users\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

@@ -1,10 +1,30 @@
 {
-  "name": "AppyTasteNewG",
-  "version": "0.0.0",
-  "description": "AppyTasteNewG",
-  "main": "server.js",
+  "name": "AppyTasteNew",
+  "version": "0.0.1",
+  "description": "AppyTasteNew",
+  "main": "app.js",
   "author": {
-    "name": "since",
-    "email": ""
+    "name": "ismail ozcan",
+    "email": "io08@outlook.com"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.14.0",
+    "helmet": "^2.1.1",
+    "jquery-deferred": "^0.3.0",
+    "jsonwebtoken": "^7.1.6",
+    "mongodb": "^2.2.4",
+    "path": "^0.12.7",
+    "request": "^2.74.0",
+    "twilio": "^2.9.1",
+    "winston": "^2.2.0",
+    "winston-loggly": "^1.3.1",
+    "winston-mongodb": "^1.6.0"
+  },
+  "devDependencies": {
+    "debug": "^2.2.0"
   }
 }
