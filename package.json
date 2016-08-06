@@ -1,0 +1,10 @@
+{
+  "name": "AppyTasteNewG",
+  "version": "0.0.0",
+  "description": "AppyTasteNewG",
+  "main": "server.js",
+  "author": {
+    "name": "since",
+    "email": ""
+  }
+}
