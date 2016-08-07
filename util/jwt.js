@@ -5,7 +5,7 @@
 var TokenRequired = function () {
     return function (req, res, next) {
         if (req) {
-            if (req.url.indexOf('/api/register') == 0)
+            if (req.url.indexOf('/api/register') == 0 || req.url.indexOf('/api/auth/'))
                 next();
             else
                 jwt.verify(req.body.token, cfg.JSONToken.secret, function (err, object) {
