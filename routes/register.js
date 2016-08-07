@@ -5,7 +5,7 @@
 var registerFunction = function (req, res) {
     busRegister.RegisterByPhoneNumber({ appId : req.body.appId , gsmNo : req.body.gsmNo, sessionId : req.session.id }, function (result) {
         if (result.status) {
-            req.session.userId = '12312';
+            req.session.userId = result.data.user._id;
             req.session.token = result.data.token;
         }
         res.json(result);

@@ -89,3 +89,6 @@
 {"url":"/?qqq=sdf222","method":"POST","params":{"0":"/as"},"query":{"qqq":"sdf222"},"body":{"id":"115"},"ip":"::ffff:127.0.0.1","level":"debug","message":"  APP_REQUEST ","timestamp":"2016-08-07T21:06:39.601Z"}
 {"url":"/?qqq=sdf222","method":"POST","params":{"0":"/as"},"query":{"qqq":"sdf222"},"body":{"id":"115"},"ip":"::ffff:127.0.0.1","level":"debug","message":"  APP_REQUEST ","timestamp":"2016-08-07T21:06:39.779Z"}
 {"url":"/?qqq=sdf222","method":"POST","params":{"0":"/as"},"query":{"qqq":"sdf222"},"body":{"id":"115"},"ip":"::ffff:127.0.0.1","level":"debug","message":"  APP_REQUEST ","timestamp":"2016-08-07T21:06:39.945Z"}
+{"url":"/","method":"GET","params":{"0":"/"},"query":{},"body":{},"ip":"::1","level":"debug","message":"  APP_REQUEST ","timestamp":"2016-08-07T21:10:11.147Z"}
+{"level":"debug","message":"  DB Ready","timestamp":"2016-08-07T21:10:11.535Z"}
+{"url":"/","method":"GET","params":{"0":"/admin/"},"query":{},"body":{},"ip":"::1","level":"debug","message":"  APP_REQUEST ","timestamp":"2016-08-07T21:10:16.321Z"}
