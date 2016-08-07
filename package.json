@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "AppyTasteNew",
   "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js" 
+  },
   "author": {
     "name": "ismail ozcan",
     "email": "io08@outlook.com"
