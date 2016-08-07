@@ -46,7 +46,6 @@
     <Compile Include="routes\auth\authIndex.js" />
     <Compile Include="routes\login.js" />
     <Compile Include="routes\register.js" />
-    <Compile Include="server.js" />
     <Compile Include="util\handlebarsEngine.js" />
     <Compile Include="util\jwt.js" />
     <Compile Include="util\logger.js" />
