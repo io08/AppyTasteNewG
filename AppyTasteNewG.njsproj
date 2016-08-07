@@ -5,6 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>AppyTasteNewG</Name>
     <RootNamespace>AppyTasteNewG</RootNamespace>
+    <Environment>NODE_ENV=PROD</Environment>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -52,21 +53,6 @@
     <Compile Include="util\smssender.js" />
     <Compile Include="util\stringHelper.js" />
     <Compile Include="util\util.js" />
-    <Content Include="appy\.gitignore" />
-    <Content Include="appy\.git\config" />
-    <Content Include="appy\.git\description" />
-    <Content Include="appy\.git\HEAD" />
-    <Content Include="appy\.git\hooks\README.sample" />
-    <Content Include="appy\.git\index" />
-    <Content Include="appy\.git\info\exclude" />
-    <Content Include="appy\.git\logs\HEAD" />
-    <Content Include="appy\.git\logs\refs\heads\master" />
-    <Content Include="appy\.git\logs\refs\remotes\origin\master" />
-    <Content Include="appy\.git\objects\pack\pack-d3a6be068795b0bec8c2b4526a400042488f3ac6.idx" />
-    <Content Include="appy\.git\objects\pack\pack-d3a6be068795b0bec8c2b4526a400042488f3ac6.pack" />
-    <Content Include="appy\.git\refs\heads\master" />
-    <Content Include="appy\.git\refs\remotes\origin\master" />
-    <Content Include="appy\README.md" />
     <Content Include="logs\all-logs.log" />
     <Content Include="package.json" />
     <Content Include="README.md" />
@@ -77,23 +63,6 @@
     <Content Include="views\users.hbs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="appy\" />
-    <Folder Include="appy\.git\" />
-    <Folder Include="appy\.git\hooks\" />
-    <Folder Include="appy\.git\info\" />
-    <Folder Include="appy\.git\logs\" />
-    <Folder Include="appy\.git\logs\refs\" />
-    <Folder Include="appy\.git\logs\refs\heads\" />
-    <Folder Include="appy\.git\logs\refs\remotes\" />
-    <Folder Include="appy\.git\logs\refs\remotes\origin\" />
-    <Folder Include="appy\.git\objects\" />
-    <Folder Include="appy\.git\objects\info\" />
-    <Folder Include="appy\.git\objects\pack\" />
-    <Folder Include="appy\.git\refs\" />
-    <Folder Include="appy\.git\refs\heads\" />
-    <Folder Include="appy\.git\refs\remotes\" />
-    <Folder Include="appy\.git\refs\remotes\origin\" />
-    <Folder Include="appy\.git\refs\tags\" />
     <Folder Include="bus\" />
     <Folder Include="dal\" />
     <Folder Include="dal\appConfig\" />

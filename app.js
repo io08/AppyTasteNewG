@@ -11,7 +11,8 @@
     jt = JToken(),
     logger = require('./util/logger.js'),
     util = require('./util/util.js'),
-    ObjectID = require('mongodb').ObjectID;
+    ObjectID = require('mongodb').ObjectID,
+    requestIp = require('request-ip');
  
 global.cfg = cfg;
 var dbDeff = new $.Deferred();
@@ -19,16 +20,17 @@ dbDeff.promise();
 //app.use(helmet());
 
 app.use(express.static('./public'));
-app.all('/*', function (req, res, next) {
-    logger.log('request Log ==> %s', req.url, { url: req.url , body : req.body });
-    next();
-});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(expressSession({ secret: 'kyKs3s!n' }));
-var str = require('./util/stringHelper.js')();
+app.use(requestIp.mw())
+app.use('*', function (req, res, next) { 
+    logger.debug('APP_REQUEST', '', { url: req.url , method: req.method, params : req.params , query: req.query , body : req.body ? req.body : {} , ip: req.clientIp });
+    next();
+});
 
+var str = require('./util/stringHelper.js')();
 var hbs = require('./util/handlebarsEngine');
 app.engine('.hbs', hbs);
 app.set('view engine', '.hbs');
@@ -39,6 +41,7 @@ process.on('uncaughtException', function (err) {
 
 /*--------------------Get DB-------------*/
 var connect = require('./dal/db/dalConnection.js')();
+
 var db = connect.Conn(function (err, database) {
     if (err) throw err;
     db = database;
@@ -53,6 +56,7 @@ var db = connect.Conn(function (err, database) {
 global.conn = function () {
     return db;
 };
+
 
 /*--------------------Get DB-------------*/
 app.all('/api/*', jt.TokenRequired(), function (req, res, next) {

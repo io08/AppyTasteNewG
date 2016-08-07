@@ -39,9 +39,9 @@ if (ENV == 'PROD') {
     };
     
     loggly = {
-        token: "3a7c8ea5-1b6a-4759-8b9f-cbe2a8423a86",
-        subdomain: "appy",
-        tags: ["Appy"],
+        token: "67bb655d-7b97-4893-90e4-2b0e49244b72",
+        subdomain: "io08",
+        tags: ["Winston-NodeJS"],
         json: true
     };
     
@@ -89,9 +89,9 @@ if (ENV == 'DEV') {
     };
     
     loggly = {
-        token: "3a7c8ea5-1b6a-4759-8b9f-cbe2a8423a86",
-        subdomain: "appy",
-        tags: ["Appy"],
+        token: "67bb655d-7b97-4893-90e4-2b0e49244b72",
+        subdomain: "io08",
+        tags: ["Winston-NodeJS"],
         json: true
     };
     

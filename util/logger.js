@@ -13,6 +13,12 @@ var logger = null;
 if (cfg.ENV == 'PROD')
     logger = new winston.Logger({
         transports: [
+            new winston.transports.Console({
+                level: 'debug',
+                handleExceptions: true,
+                json: false,
+                colorize: true
+            }),
             new winston.transports.MongoDB({
                 level: 'debug',
                 db: cfg.MongoDBLog.connectionString
@@ -25,7 +31,7 @@ if (cfg.ENV == 'PROD')
                 maxsize: 5242880, //5MB
                 maxFiles: 5,
                 colorize: false
-            }),
+            }), 
             new winston.transports.Loggly(cfg.loggly)
         ],
         exitOnError: false
@@ -34,11 +40,13 @@ if (cfg.ENV == 'PROD')
 // enable console logging for dev
 if (cfg.ENV == 'DEV') {
     logger = new winston.Logger({
-        transports: [
-            new winston.transports.MongoDB({
+        transports: [ 
+            new winston.transports.Console({
                 level: 'debug',
-                db: cfg.MongoDBLog.connectionString
-            }),
+                handleExceptions: true,
+                json: false,
+                colorize: true
+            }), 
             new winston.transports.File({
                 level: 'debug',
                 filename: cfg.Log.file,
@@ -47,13 +55,12 @@ if (cfg.ENV == 'DEV') {
                 maxsize: 5242880, //5MB
                 maxFiles: 5,
                 colorize: false
-            }),
-            new winston.transports.Loggly(cfg.loggly)
+            })
         ],
         exitOnError: false
     });
 }
-    
+
 logger.cli();
 logger.pdata = function (str, data) {
     logger.debug(str);

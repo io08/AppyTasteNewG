@@ -39,19 +39,11 @@ var ValidateUserGsmNo = function (data, cb) {
             
     });
 };
-var RegisterFacebookUser = function (data, cb) {
-    console.log('43_RegisterFacebookUser');
+var RegisterFacebookUser = function (data, cb) { 
     if (!(data.status && data.status == "connected")) {
         cb(new response(false, "Not connectod to SF"));
-    } else {
-        
+    } else { 
         logger.debug('FaceBookAuthCallBack', data);
-        fb.postMessage(data.authResponse.accessToken, "Demo", function (res) {
-            logger.debug('data %s', res);
-            console.log(res);
-        });
-    }
-    {
         dalUser.findOrInsert({ gsmNo : data.gsmNo }, function (userInfo) {
             var gsmValidationCode = util.randomNumber(100000, 999999);
             dalUser.update({ _id : userInfo._id }, { $set : { "gsmValidationCode": gsmValidationCode, "gsmIsValidated" : false , "gsmMaxValidationDate" : util.addMinutes(new Date(), 3) } }, function (updateResult) {
@@ -63,7 +55,7 @@ var RegisterFacebookUser = function (data, cb) {
             });
             
         });
-    }
+    };
 };
 
 exports.RegisterByPhoneNumber = RegisterByPhoneNumber;
