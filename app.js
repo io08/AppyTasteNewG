@@ -20,7 +20,7 @@ dbDeff.promise();
 
 app.use(express.static('./public'));
 app.all('/*', function (req, res, next) {
-    logger.log('request Log ==> %s', req.url);
+    logger.log('request Log ==> %s', req.url, { url: req.url , body : req.body });
     next();
 });
 app.use(bodyParser.json());
