@@ -65,11 +65,11 @@ function getUserInfo(access_token, cb) {
         access_token: access_token,
         fields : "email,first_name,last_name,birthday,location"
     };
-    request.post({ url: url, qs: params }, function (err, resp, body) {
+    request.get({ url: url, qs: params }, function (err, resp, body) {
         //TODO empty data;
         body = JSON.parse(body);
-        if (body.success)
-            cb(new response(true, '', { }));
+        if (body.id)
+            cb(new response(true, '', body));
         else
             cb(new response(false, body.error));
     });

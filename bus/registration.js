@@ -50,23 +50,22 @@ var RegisterFacebookUser = function (data, cb) {
             fb.extendAccessToken(data.authResponse.accessToken, function (res) {
                 if (res.status) {
                     var longToken = res.data.access_token;
-                    if (isNewUser  || 1 == 1) {
-                        //TODO Get User Info Here from fb class
+                    if (isNewUser) { 
                         fb.getUserInfo(longToken, function (resDetail) {
                             if (!resDetail.status) {
                                 cb(new response(false, "Kullanıcı detay datasına ulaşılamadı"));
                             } else {
                                 var userDetail = resDetail.data;
-                                dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": res.data.access_token, "signedRequest" : data.authResponse.signedRequest } }, function (updateResult) {
+                                dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": longToken, "signedRequest" : data.authResponse.signedRequest,email: userDetail.email ,name: userDetail.name,birthday : userDetail.birthday ,location: userDetail.location } }, function (updateResult) {
                                     logger.debug('FacebookUser Registered', '', data.authResponse);
-                                    cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : userInfo }));
+                                    cb(new response(true, '', { token : longToken  , sessionId : data.sessionId, user  : userInfo }));
                                 });
                             }
                         });
                     } else {
-                        dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": res.data.access_token, "signedRequest" : data.authResponse.signedRequest } }, function (updateResult) {
+                        dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": longToken, "signedRequest" : data.authResponse.signedRequest } }, function (updateResult) {
                             logger.debug('FacebookUser Registered', '', data.authResponse);
-                            cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : userInfo }));
+                            cb(new response(true, '', { token : longToken  , sessionId : data.sessionId, user  : userInfo }));
                         });
                     }
                 }
