@@ -46,16 +46,22 @@ var RegisterFacebookUser = function (data, cb) {
     } else {
         logger.debug('FaceBookAuthCallBack', '', data);
         dalUser.findOrInsert({ fbUserId : data.authResponse.userID }, function (userInfo) {
-            var isNewUser = userInfo.isNew;
+            var isNewUser = userInfo.isNew != undefined && userInfo.isNew;
             fb.extendAccessToken(data.authResponse.accessToken, function (res) {
                 if (res.status) {
                     var longToken = res.data.access_token;
-                    if (isNewUser) {
+                    if (isNewUser  || 1 == 1) {
                         //TODO Get User Info Here from fb class
-                        
-                        dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": res.data.access_token, "signedRequest" : data.authResponse.signedRequest } }, function (updateResult) {
-                            logger.debug('FacebookUser Registered', '', data.authResponse);
-                            cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : userInfo }));
+                        fb.getUserInfo(longToken, function (resDetail) {
+                            if (!resDetail.status) {
+                                cb(new response(false, "Kullanıcı detay datasına ulaşılamadı"));
+                            } else {
+                                var userDetail = resDetail.data;
+                                dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": res.data.access_token, "signedRequest" : data.authResponse.signedRequest } }, function (updateResult) {
+                                    logger.debug('FacebookUser Registered', '', data.authResponse);
+                                    cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : userInfo }));
+                                });
+                            }
                         });
                     } else {
                         dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": res.data.access_token, "signedRequest" : data.authResponse.signedRequest } }, function (updateResult) {

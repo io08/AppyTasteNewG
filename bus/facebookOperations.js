@@ -60,19 +60,22 @@ function extendAccessToken(access_token, cb) {
 }
 function getUserInfo(access_token, cb) {
      
-    //var url = 'https://graph.facebook.com/me';
-    //var params = { 
-    //    access_token: access_token
-    //};
-    //request.post({ url: url, qs: params }, function (err, resp, body) {
-    //    body = qs.parse(body);
-    //    if (body.access_token)
-    //        cb(new response(true, '', { access_token: body.access_token, expires : body.expires }));
-    //    else
-    //        cb(new response(false, body.error));
-    //});
+    var url = 'https://graph.facebook.com/me';
+    var params = {
+        access_token: access_token,
+        fields : "email,first_name,last_name,birthday,location"
+    };
+    request.post({ url: url, qs: params }, function (err, resp, body) {
+        //TODO empty data;
+        body = JSON.parse(body);
+        if (body.success)
+            cb(new response(true, '', { }));
+        else
+            cb(new response(false, body.error));
+    });
 }
 
 exports.postMessage = postMessage;
 exports.sendNotification = sendNotification;
 exports.extendAccessToken = extendAccessToken;
+exports.getUserInfo = getUserInfo;
