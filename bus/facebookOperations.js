@@ -1,14 +1,12 @@
 ﻿var logger = require('../util/logger.js'),
     response = require('../entity/general/response'),
-    request = require('request');
-
-// http://code.runnable.com/UTlPM1-f2W1TAABY/post-on-facebook
+    request = require('request'),
+    qs = require('querystring');
 function postMessage(access_token, message, cb) {
-    
     var url = 'https://graph.facebook.com/me/feed';
     var params = {
         access_token: access_token,
-         message: message,
+        message: message,
         /*link: 'www.google.com',
         picture: 'http://cdni.wired.co.uk/1920x1280/g_j/GOOGLELOGO_1.jpg',
         name: 'Google',
@@ -18,7 +16,6 @@ function postMessage(access_token, message, cb) {
             value: 'ALL_FRIENDS'
         }
     };
-    
     request.post({ url: url, qs: params }, function (err, resp, body) {
         body = JSON.parse(body);
         if (body.id) {
@@ -26,29 +23,56 @@ function postMessage(access_token, message, cb) {
             cb(new response(true, '', { id: body.id }));
         }
         else
-            cb(new response(false, body.error.error_user_title ? body.error.error_user_title : body.error.message));
+            cb(new response(false, body.error));
     });
 }
 
-// http://code.runnable.com/UTlPM1-f2W1TAABY/post-on-facebook
 function sendNotification(access_token, userId, message, cb) {
-    logger.debug('Send notification');
-    // Specify the URL and query string parameters needed for the request
-    var url = 'https://graph.facebook.com/' + userId + '/notifications';
+    var url = String.format('https://graph.facebook.com/{0}/notifications', userId);
     var params = {
         href: 'users/login',
         access_token: global.cfg.facebook.appAccessToken,//access_token,
         template: message
     };
-    
     request.post({ url: url, qs: params }, function (err, resp, body) {
         body = JSON.parse(body);
         if (body.id)
             cb(new response(true, '', { id: body.id }));
         else
-            cb(new response(false, body.error.error_user_title ? body.error.error_user_title : body.error.message));
+            cb(new response(false, body.error));
     });
+}
+function extendAccessToken(access_token, cb) {
+    var url = 'https://graph.facebook.com/oauth/access_token';
+    var params = {
+        grant_type : "fb_exchange_token",
+        client_id: global.cfg.facebook.apiKey,
+        client_secret : global.cfg.facebook.apiSecret,
+        fb_exchange_token: access_token
+    }; 
+    request.post({ url: url, qs: params }, function (err, resp, body) {
+        body = qs.parse(body);
+        if (body.access_token)
+            cb(new response(true, '', { access_token: body.access_token, expires : body.expires }));
+        else
+            cb(new response(false, body.error));
+    });
+}
+function getUserInfo(access_token, cb) {
+     
+    //var url = 'https://graph.facebook.com/me';
+    //var params = { 
+    //    access_token: access_token
+    //};
+    //request.post({ url: url, qs: params }, function (err, resp, body) {
+    //    body = qs.parse(body);
+    //    if (body.access_token)
+    //        cb(new response(true, '', { access_token: body.access_token, expires : body.expires }));
+    //    else
+    //        cb(new response(false, body.error));
+    //});
 }
 
 exports.postMessage = postMessage;
 exports.sendNotification = sendNotification;
+exports.extendAccessToken = extendAccessToken;

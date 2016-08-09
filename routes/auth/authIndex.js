@@ -1,8 +1,9 @@
-﻿var router = require('express').Router();
-var busRegister = require('../../bus/registration');
-var facebookAuthentication = function (req, res) {
-    console.debug('4_facebookAuthentication', '', { data: req.authResponse });
-    busRegister.RegisterFacebookUser({ status : req.status , authResponse: req.authResponse }, 
+﻿var router = require('express').Router(),
+    busRegister = require('../../bus/registration'),
+    logger = require('../../util/logger.js');
+var facebookAuthentication = function (req, res) { 
+    logger.debug('facebookAuthentication', '', { data: req.body });
+    busRegister.RegisterFacebookUser({ status : req.body.status , authResponse: req.body.authResponse }, 
     function (result) {
         if (result.status) {
             req.session.userId = result.data.user._id;

@@ -3,7 +3,8 @@
     jt = require('../util/jwt.js')(),
     smsSender = require('../util/smssender'), 
     util = require('../util/util'),
-    logger = require('../util/logger.js'),
+    logger = require('../util/logger.js'),    
+    request = require('request'),
     fb = require('./facebookOperations.js');
 
 var RegisterByPhoneNumber = function (data, cb) {
@@ -39,26 +40,31 @@ var ValidateUserGsmNo = function (data, cb) {
             
     });
 };
-var RegisterFacebookUser = function (data, cb) { 
+var RegisterFacebookUser = function (data, cb) {
     if (!(data.status && data.status == "connected")) {
         cb(new response(false, "Not connectod to SF"));
-    } else { 
+    } else {
         logger.debug('FaceBookAuthCallBack', '', data);
         dalUser.findOrInsert({ fbUserId : data.authResponse.userID }, function (userInfo) {
             var isNewUser = userInfo.isNew;
-            if (isNewUser) {
-                //TODO generate long living facebook token in both cases...
-                dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": data.authResponse.accessToken, "signedRequest" : data.authResponse.signedRequest } }, function (updateResult) {
-                    logger.debug('FacebookUser Registered', '', data.authResponse);
-                    cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : userInfo }));
-                });
-            } else {
-                dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": data.authResponse.accessToken, "signedRequest" : data.authResponse.signedRequest } }, function (updateResult) {
-                    logger.debug('FacebookUser Registered', '', data.authResponse);
-                    cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : userInfo }));
-                });
-            }
-            
+            fb.extendAccessToken(data.authResponse.accessToken, function (res) {
+                if (res.status) {
+                    var longToken = res.data.access_token;
+                    if (isNewUser) {
+                        //TODO Get User Info Here from fb class
+                        
+                        dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": res.data.access_token, "signedRequest" : data.authResponse.signedRequest } }, function (updateResult) {
+                            logger.debug('FacebookUser Registered', '', data.authResponse);
+                            cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : userInfo }));
+                        });
+                    } else {
+                        dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": res.data.access_token, "signedRequest" : data.authResponse.signedRequest } }, function (updateResult) {
+                            logger.debug('FacebookUser Registered', '', data.authResponse);
+                            cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : userInfo }));
+                        });
+                    }
+                }
+            });
         });
     };
 };
