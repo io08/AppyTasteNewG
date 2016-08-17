@@ -18,7 +18,7 @@ var RegisterByPhoneNumber = function (data, cb) {
                 var registrationMessage = 'Please register with the code below : ' + gsmValidationCode;
                 logger.debug('User with GSM %s registration code : %s', data.gsmNo, gsmValidationCode);
                 smsSender.sendSMSMessage(userInfo.gsmNo, registrationMessage, function (res) {
-                    cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : userInfo }));
+                    cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : { _id : userInfo._id , gsmValidationCode : gsmValidationCode , gsmMaxValidationDate : util.addMinutes(new Date(), 3) } }));
                 });
             });
             
