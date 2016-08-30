@@ -18,10 +18,23 @@ var RegisterByPhoneNumber = function (data, cb) {
                 var registrationMessage = 'Please register with the code below : ' + gsmValidationCode;
                 logger.debug('User with GSM %s registration code : %s', data.gsmNo, gsmValidationCode);
                 smsSender.sendSMSMessage(userInfo.gsmNo, registrationMessage, function (res) {
-                    cb(new response(true, '', { token : token  , sessionId : data.sessionId, user  : { _id : userInfo._id , gsmValidationCode : gsmValidationCode , gsmMaxValidationDate : util.addMinutes(new Date(), 3) } }));
+                    cb(new response(true, '', { token : token  ,  user  : { _id : userInfo._id , gsmValidationCode : gsmValidationCode , gsmMaxValidationDate : util.addMinutes(new Date(), 3) } }));
                 });
             });
             
+        });
+    }
+};
+var ReloginUser = function (data, cb) {
+    if (data.appId && !util.isValidAppKey(data.appId)) {
+        cb(new response(false, "Application id is not valid"));
+    } else {
+        var token = jt.jwt.sign(data.sessionId, global.cfg.JSONToken.secret);
+        dalUser.find({ _id : toObjectId(data.userId) }, function (userInfo) {
+            if (userInfo && userInfo._id) {
+                cb(new response(true, '', { token : token  ,  user  : userInfo }));
+            } else
+                cb(new response(false, "User record not found."));
         });
     }
 };
@@ -53,7 +66,7 @@ var RegisterFacebookUser = function (data, cb) {
                     if (isNewUser) { 
                         fb.getUserInfo(longToken, function (resDetail) {
                             if (!resDetail.status) {
-                                cb(new response(false, "Kullanıcı detay datasına ulaşılamadı"));
+                                cb(new response(false, "Couldn't reached to users facebook data."));
                             } else {
                                 var userDetail = resDetail.data;
                                 dalUser.update({ _id : userInfo._id }, { $set : { "accessToken": longToken, "signedRequest" : data.authResponse.signedRequest,email: userDetail.email ,name: userDetail.name,birthday : userDetail.birthday ,location: userDetail.location } }, function (updateResult) {
@@ -77,3 +90,4 @@ var RegisterFacebookUser = function (data, cb) {
 exports.RegisterByPhoneNumber = RegisterByPhoneNumber;
 exports.ValidateUserGsmNo = ValidateUserGsmNo;
 exports.RegisterFacebookUser = RegisterFacebookUser;
+exports.ReloginUser = ReloginUser;

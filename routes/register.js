@@ -16,6 +16,7 @@ var validateUserGsmNo = function (req, res) {
         , function (result) { res.json(result); });
 };
 
-router.post('/validateUserGsmNo', validateUserGsmNo)
+router.post('/validateUserGsmNo', validateUserGsmNo);
 router.post('/register', registerFunction);
+
 module.exports = router;

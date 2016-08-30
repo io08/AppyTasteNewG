@@ -12,5 +12,11 @@ var facebookAuthentication = function (req, res) {
         res.json(result);
     });
 };
+var ReloginUser = function (req, res) {
+    logger.debug('App Launch User Login', '', { data: req.body });
+    busRegister.ReloginUser({ appId : req.body.appId, userId : req.body.userId , sessionId : req.session.id }
+        , function (result) { res.json(result); });
+};
+router.post('/reloginUser', ReloginUser);
 router.post('/facebook', facebookAuthentication);
 module.exports = router;
